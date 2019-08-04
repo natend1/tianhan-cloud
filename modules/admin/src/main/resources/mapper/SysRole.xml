@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nieat.modules.admin.dao.ISysRoleDao">
+    <resultMap id="roleMenuMap" type="com.nieat.modules.admin.vo.SysRoleVO">
+        <id column="id" property="id" javaType="String" jdbcType="BIGINT"/>
+        <result column="role_name" property="roleName" javaType="String" jdbcType="VARCHAR"/>
+
+        <collection property="menus" ofType="com.nieat.modules.admin.vo.SysMenuVO">
+            <id column="menu_id" property="id" javaType="String" jdbcType="BIGINT"/>
+            <result column="parent_id" property="parentId" javaType="String" jdbcType="BIGINT"/>
+            <result column="menu_name" property="menuName" javaType="String" jdbcType="VARCHAR"/>
+            <result column="menu_uri" property="menuUri" javaType="String" jdbcType="VARCHAR"/>
+            <result column="authority" property="authority" javaType="String" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <select id="queryList" resultType="com.nieat.modules.admin.vo.SysRoleVO">
+        SELECT r.id,r.role_name as roleName,r.create_user as createUser,r.create_time as createTime FROM sys_role r
+    </select>
+
+    <select id="queryRoleMenu" resultMap="roleMenuMap">
+        SELECT
+            r.*,
+            m2.id menu_id,
+            m2.menu_name,
+            m2.menu_uri,
+            m2.authority
+        FROM
+            sys_role r
+            LEFT JOIN ( SELECT t.role_id, m.* FROM sys_menu m INNER JOIN sys_role_menu t ON m.id = t.menu_id ) m2 ON r.id = m2.role_id
+          WHERE r.id = #{id}
+    </select>
+
+    <insert id="insertRoleMenuRelation">
+        insert into sys_role_menu(role_id,menu_id,authority) values
+        <foreach collection="menus" item="item" index="index" separator=",">
+            (#{roleId},#{item.id},#{item.authority})
+        </foreach>
+    </insert>
+
+    <delete id="delRoleMenuRelation">
+        delete from sys_role_menu where role_id = #{roleId}
+    </delete>
+</mapper>

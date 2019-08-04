@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nieat.modules.admin.dao.ISysUserDao">
+
+    <resultMap id="userRoleMenuMap" type="com.nieat.modules.admin.entity.SysUserEntity">
+        <id column="id" property="id" javaType="String" jdbcType="BIGINT"/>
+        <result column="username" property="username" javaType="String" jdbcType="VARCHAR"/>
+        <result column="password" property="password" javaType="String" jdbcType="VARCHAR"/>
+        <result column="nickname" property="nickname" javaType="String" jdbcType="VARCHAR"/>
+        <result column="email" property="email" javaType="String" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" javaType="String" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" javaType="String" jdbcType="DATE"/>
+        <result column="create_user" property="createUser" javaType="String" jdbcType="VARCHAR"/>
+
+        <collection property="roles" ofType="com.nieat.modules.admin.entity.SysRoleEntity">
+            <result column="role_id" property="id" javaType="String" jdbcType="BIGINT"/>
+            <result column="role_name" property="roleName" javaType="String" jdbcType="VARCHAR"/>
+            <collection property="menus" ofType="com.nieat.modules.admin.entity.SysMenuEntity">
+                <id column="menu_id" property="id" javaType="String" jdbcType="BIGINT"/>
+                <result column="parent_id" property="parentId" javaType="String" jdbcType="BIGINT"/>
+                <result column="menu_name" property="menuName" javaType="String" jdbcType="VARCHAR"/>
+                <result column="menu_uri" property="menuUri" javaType="String" jdbcType="VARCHAR"/>
+                <result column="authority" property="authority" javaType="String" jdbcType="VARCHAR"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="loginUsername" resultMap="userRoleMenuMap">
+        SELECT
+            u.*,
+            r2.id role_id,
+            r2.role_name,
+            r2.menu_id,
+            r2.parent_id,
+            r2.menu_name,
+            r2.menu_uri,
+            r2.authority
+        FROM
+            sys_user u
+            INNER JOIN sys_user_role t1 ON u.id = t1.user_id,
+            (
+        SELECT
+            r.id,
+            r.role_name,
+            m2.id menu_id,
+            m2.parent_id,
+            m2.menu_name,
+            m2.menu_uri,
+            m2.authority
+        FROM
+            sys_role r
+            LEFT JOIN ( SELECT t.role_id, m.* FROM sys_menu m INNER JOIN sys_role_menu t ON m.id = t.menu_id ) m2 ON r.id = m2.role_id
+            ) r2
+        WHERE
+            r2.id IN ( t1.role_id ) AND u.username = #{username}
+    </select>
+
+    <select id="list" resultType="com.nieat.modules.admin.vo.SysUserVO">
+        SELECT
+            u.id,
+            u.username,
+            u.nickname
+        FROM
+            sys_user u
+    </select>
+
+    <select id="detailUser" resultType="com.nieat.modules.admin.vo.SysRoleVO">
+        SELECT
+            r.*
+        FROM
+            sys_role r
+            INNER JOIN sys_user_role t ON r.id = t.role_id
+        WHERE
+            t.user_id = #{id}
+    </select>
+
+    <insert id="insertRoleRelation">
+        insert into sys_user_role (user_id,role_id) values
+        <foreach collection="roleIds" item="item" index="index" separator=",">
+            ( #{userId},#{item})
+        </foreach>
+    </insert>
+
+    <delete id="delRoleRelation">
+        delete from sys_user_role where user_id = #{userId}
+    </delete>
+
+</mapper>

@@ -1,0 +1,22 @@
+server:
+  port: 8081
+spring:
+  profiles:
+    active: dev
+  application:
+    name: nieat-admin
+  redis:
+    database: 2
+    host: host
+    port: port
+  cloud:
+    nacos:
+      discovery:
+        server-addr: host:port
+
+# mybatis-plus  配置
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # sql日志控制台打印
+    map-underscore-to-camel-case: true
