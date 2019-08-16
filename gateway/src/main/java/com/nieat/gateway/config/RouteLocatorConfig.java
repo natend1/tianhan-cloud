@@ -24,7 +24,7 @@ public class RouteLocatorConfig {
     private CaptchaConfig captchaConfig;
 
     /**
-     * 官方文档(BETA)
+     * 推荐
      * 验证码校验 与 修改认证服务器响应数据格式
      *
      * @param builder
@@ -47,7 +47,7 @@ public class RouteLocatorConfig {
                                     ResponseBody responseBody = new ResponseBody();
                                     responseBody.setCode(code);
                                     if (code == HttpStatus.OK.value()) {
-                                        responseBody.setMessage("success");
+                                        responseBody.setMessage("登录成功!");
                                     } else {
                                         String error = content.getString("error_message");
                                         String message = error != null ? error : "error";
@@ -73,7 +73,7 @@ public class RouteLocatorConfig {
                             ResponseBody responseBody = new ResponseBody();
                             responseBody.setCode(code);
                             if (code == HttpStatus.OK.value()) {
-                                responseBody.setMessage("success");
+                                responseBody.setMessage("操作成功!");
                             } else {
                                 String error = content.getString("error_message");
                                 String message = error != null ? error : "error";

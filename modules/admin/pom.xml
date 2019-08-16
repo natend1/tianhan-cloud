@@ -33,7 +33,7 @@
         </dependency>
         <dependency>
             <groupId>com.nieat</groupId>
-            <artifactId>config-common</artifactId>
+            <artifactId>core-common</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 

@@ -16,6 +16,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.io.ByteArrayOutputStream;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -53,7 +54,7 @@ public class CaptchaConfig {
         // 存放到Redis, 设置两分钟的生命周期
         String salt = request.pathVariable("salt");
         String code = captcha.getCode();
-        String key = KEY + new String(DigestUtils.md5(salt + code));
+        String key = KEY + createHashCode(salt + code);
         redisTemplate.opsForValue().set(key, captcha.getCode(), 60 * 3, TimeUnit.SECONDS);
         return ServerResponse.ok().contentType(MediaType.IMAGE_PNG).
                 body(BodyInserters.fromDataBuffers(Flux.just(new DefaultDataBufferFactory().wrap(bos.toByteArray()))));
@@ -67,12 +68,18 @@ public class CaptchaConfig {
      * @return
      */
     public boolean checkCaptcha(String captcha, String salt) {
-        String key = KEY + new String(DigestUtils.md5(salt + captcha));
+        String key = KEY + createHashCode(captcha + salt);
         String value = (String) redisTemplate.opsForValue().get(key);
         if (value == null || !value.equals(captcha)) {
             return false;
         } else {
             return true;
         }
+    }
+
+    private String createHashCode(String str) {
+        byte[] md = DigestUtils.md5(str);
+        BigInteger code = new BigInteger(1, md);
+        return code.toString(16);
     }
 }
