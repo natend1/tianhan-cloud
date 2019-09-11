@@ -1,4 +1,4 @@
-import com.nieat.gateway.GatewayApplication;
+import cn.tianhan.gateway.GatewayApplication;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
