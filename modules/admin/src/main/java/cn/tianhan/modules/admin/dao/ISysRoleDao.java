@@ -1,12 +1,11 @@
 package cn.tianhan.modules.admin.dao;
 
+import cn.tianhan.modules.admin.dto.SysMenuDTO;
+import cn.tianhan.modules.admin.entity.SysRoleEntity;
+import cn.tianhan.modules.admin.vo.SysRoleVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.nieat.modules.admin.dto.SysMenuDTO;
-import com.nieat.modules.admin.entity.SysRoleEntity;
-import com.nieat.modules.admin.vo.SysMenuVO;
-import com.nieat.modules.admin.vo.SysRoleVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -1,11 +1,11 @@
 package cn.tianhan.modules.admin.dao;
 
+import cn.tianhan.modules.admin.entity.SysUserEntity;
+import cn.tianhan.modules.admin.vo.SysRoleVO;
+import cn.tianhan.modules.admin.vo.SysUserVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.nieat.modules.admin.entity.SysUserEntity;
-import com.nieat.modules.admin.vo.SysRoleVO;
-import com.nieat.modules.admin.vo.SysUserVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
