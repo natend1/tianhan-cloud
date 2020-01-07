@@ -1,0 +1,9 @@
+spring:
+  redis:
+    database: 0
+    host: {REDIS-HOST}
+    port: {PORT}
+  cloud:
+    nacos:
+      discovery:
+        server-addr: {NACOS-HOST:PORT}

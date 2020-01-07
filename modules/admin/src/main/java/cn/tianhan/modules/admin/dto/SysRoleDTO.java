@@ -1,6 +1,5 @@
 package cn.tianhan.modules.admin.dto;
 
-import com.nieat.modules.admin.vo.SysMenuVO;
 import lombok.Data;
 
 import java.util.Date;

@@ -1,12 +1,10 @@
 server:
   port: 8080
 spring:
+  profiles:
+    active: dev
   application:
     name: nieat-gateway
-  redis:
-    database: 1
-    host: host
-    port: port
   cloud:
     gateway:
       discovery:
@@ -29,9 +27,6 @@ spring:
             - Path=/api/admin/**
           filters:
             - StripPrefix=2
-    nacos:
-      discovery:
-        server-addr: host:port
 gateway:
   ignore:
     url: /auth/oauth/token
