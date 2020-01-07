@@ -7,6 +7,9 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +22,7 @@ import java.util.List;
 @Accessors(chain = true)
 @TableName("sys_user")
 public class SysUserEntity extends Model<SysUserEntity> {
+    @Id
     @TableId(type = IdType.AUTO)
     private String id;
     private String username;

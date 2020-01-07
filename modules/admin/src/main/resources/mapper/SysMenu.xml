@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.nieat.modules.admin.dao.ISysMenuDao">
-    <select id="queryList" resultType="com.nieat.modules.admin.vo.SysMenuVO">
+<mapper namespace="cn.tianhan.modules.admin.dao.ISysMenuDao">
+    <select id="queryList" resultType="cn.tianhan.modules.admin.vo.SysMenuVO">
         SELECT m.id,m.parent_id as parentId,m.menu_name as menuName,m.menu_uri as menuUri,
           m.authority,m.create_user as createUser,m.create_time as createTime FROM sys_menu m
     </select>

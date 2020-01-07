@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.nieat.modules.admin.dao.ISysRoleDao">
-    <resultMap id="roleMenuMap" type="com.nieat.modules.admin.vo.SysRoleVO">
+<mapper namespace="cn.tianhan.modules.admin.dao.ISysRoleDao">
+    <resultMap id="roleMenuMap" type="cn.tianhan.modules.admin.vo.SysRoleVO">
         <id column="id" property="id" javaType="String" jdbcType="BIGINT"/>
         <result column="role_name" property="roleName" javaType="String" jdbcType="VARCHAR"/>
 
-        <collection property="menus" ofType="com.nieat.modules.admin.vo.SysMenuVO">
+        <collection property="menus" ofType="cn.tianhan.modules.admin.vo.SysMenuVO">
             <id column="menu_id" property="id" javaType="String" jdbcType="BIGINT"/>
             <result column="parent_id" property="parentId" javaType="String" jdbcType="BIGINT"/>
             <result column="menu_name" property="menuName" javaType="String" jdbcType="VARCHAR"/>
@@ -14,7 +14,7 @@
         </collection>
     </resultMap>
 
-    <select id="queryList" resultType="com.nieat.modules.admin.vo.SysRoleVO">
+    <select id="queryList" resultType="cn.tianhan.modules.admin.vo.SysRoleVO">
         SELECT r.id,r.role_name as roleName,r.create_user as createUser,r.create_time as createTime FROM sys_role r
     </select>
 
